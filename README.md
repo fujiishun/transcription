@@ -64,7 +64,7 @@ docker-compose exec backend python manage.py migrate
 seed 適用コマンド
 
 ```
-docker-compose exec backend python manage.py loaddata seed_data.json
+docker-compose exec backend python manage.py loaddata seed.json
 ```
 
 DB をクリアにするコマンド（※seed の入れ直しが必要。Migrate は不要）
