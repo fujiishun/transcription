@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { fetchTranscriptionList } from "../api/transcriptions";
-import TranscriptionList from "../components/transcriptions/transcriptionList";
+import {
+  fetchTranscriptionList,
+  createTranscription,
+} from "../api/transcriptions";
+import TranscriptionList from "../components/transcriptions/list";
+import CreateTranscription from "../components/transcriptions/create";
 
 const TOP = () => {
   const [transcriptions, setTranscriptions] = useState([]);
@@ -22,17 +26,41 @@ const TOP = () => {
     loadTranscriptions();
   }, []);
 
+  const handleRecordingComplete = async (audioBlob) => {
+    try {
+      const newTranscription = await createTranscription(audioBlob);
+      setTranscriptions((prev) => [newTranscription, ...prev]);
+    } catch (error) {
+      console.error("文字起こし作成中にエラーが発生しました：", error);
+    }
+  };
+
   if (loading) {
-    return <p className="text-center">Loading...</p>;
+    return (
+      <div className="text-center">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
   }
 
   if (error) {
-    return <p className="text-center text-danger">{error}</p>;
+    return (
+      <div className="text-center text-danger">
+        <p>{error}</p>
+      </div>
+    );
   }
 
   return (
-    <div>
-      <TranscriptionList transcriptions={transcriptions} />
+    <div className="container">
+      <div className="d-flex justify-content-center mt-5">
+        <CreateTranscription onRecordingComplete={handleRecordingComplete} />
+      </div>
+      <div className="d-flex justify-content-center mt-4">
+        <TranscriptionList transcriptions={transcriptions} />
+      </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Card = ({ title, children }) => {
+const TranscriptionCard = ({ title, children }) => {
   return (
     <div className="card h-100">
       <div className="card-body">
@@ -11,4 +11,4 @@ const Card = ({ title, children }) => {
   );
 };
 
-export default Card;
+export default TranscriptionCard;

@@ -2,3 +2,5 @@ Django
 djangorestframework
 django-cors-headers
 mysqlclient
+openai-whisper
+pydub

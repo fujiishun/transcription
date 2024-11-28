@@ -8,6 +8,10 @@ class TranscriptionListView(APIView):
     Transcription の一覧を取得するビュー
     """
     def get(self, request):
-        transcriptions = Transcription.objects.all()
-        serializer = TranscriptionSerializer(transcriptions, many=True)
-        return Response(serializer.data)
+        try:
+            transcriptions = Transcription.objects.all()
+            serializer = TranscriptionSerializer(transcriptions, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
