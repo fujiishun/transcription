@@ -6,7 +6,27 @@ export const fetchTranscriptionList = async () => {
     const response = await axiosInstance.get("/transcriptionList/");
     return response.data;
   } catch (error) {
-    console.error("Failed to fetch transcriptions:", error);
+    console.error("文字起こしリストの取得に失敗しました：", error);
+    throw error;
+  }
+};
+
+// 音声データを送信して文字起こしを作成するAPI
+export const createTranscription = async (audioBlob) => {
+  const formData = new FormData();
+  formData.append("audio", audioBlob, "recording.webm");
+
+  try {
+    const response = await axiosInstance.post(
+      "/transcriptionCreate/",
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("文字起こしの作成に失敗しました：", error);
     throw error;
   }
 };

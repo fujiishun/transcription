@@ -22,7 +22,7 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error("API Error:", error.response?.status, error.response?.data);
+    console.error("APIエラー:", error.response?.status, error.response?.data);
     return Promise.reject(error);
   }
 );
